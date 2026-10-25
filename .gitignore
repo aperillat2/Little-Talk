@@ -1,0 +1,9 @@
+# Per-user Xcode state (window layout, scheme visibility, breakpoints)
+xcuserdata/
+
+# Build output, if built outside the default DerivedData location
+build/
+DerivedData/
+
+# macOS
+.DS_Store
