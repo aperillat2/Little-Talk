@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 @main struct LittleTalkApp: App {
@@ -8,5 +9,7 @@ import SwiftUI
             ContentView()
                 .environment(profileStore)
         }
+        // On-device SwiftData store for History.
+        .modelContainer(for: MomentLog.self)
     }
 }

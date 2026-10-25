@@ -6,6 +6,8 @@ import SwiftUI
 /// `NavigationStack`; "Choose another moment" is reported to the parent view.
 struct FeaturedMomentCard: View {
     let moment: InteractionMoment
+    /// Shows a "Tried today" confirmation once the moment is saved to History.
+    var wasTriedToday: Bool = false
     let onChooseAnother: () -> Void
 
     @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 48
@@ -20,9 +22,15 @@ struct FeaturedMomentCard: View {
                     .background(Theme.Colors.accentSoft, in: .circle)
                     .accessibilityHidden(true)
 
-                Text("Today's moment")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(Theme.Colors.textSecondary)
+                if wasTriedToday {
+                    Label("Tried today", systemImage: "checkmark.circle.fill")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Theme.Colors.accent)
+                } else {
+                    Text("Today's moment")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Theme.Colors.textSecondary)
+                }
             }
 
             VStack(alignment: .leading, spacing: 12) {
@@ -75,9 +83,19 @@ struct FeaturedMomentCard: View {
     }
 }
 
-#Preview {
+#Preview("Not tried") {
     NavigationStack {
         FeaturedMomentCard(moment: MomentLibrary.takeATurn) {}
+            .padding()
+            .frame(maxHeight: .infinity)
+            .background(Theme.Colors.background)
+    }
+    .tint(Theme.Colors.accent)
+}
+
+#Preview("Tried today") {
+    NavigationStack {
+        FeaturedMomentCard(moment: MomentLibrary.takeATurn, wasTriedToday: true) {}
             .padding()
             .frame(maxHeight: .infinity)
             .background(Theme.Colors.background)

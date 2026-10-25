@@ -1,13 +1,14 @@
+import SwiftData
 import SwiftUI
 
 /// A simple guided view shown after tapping "Try this moment".
 ///
-/// Placeholder for the future interaction flow: it presents the steps but
-/// does not yet record anything to History.
+/// Presents the steps; tapping Done saves the moment to History.
 struct MomentDetailView: View {
     let moment: InteractionMoment
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         ScrollView {
@@ -36,6 +37,7 @@ struct MomentDetailView: View {
                 )
 
                 Button {
+                    saveToHistory()
                     dismiss()
                 } label: {
                     Text("Done")
@@ -46,8 +48,9 @@ struct MomentDetailView: View {
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
                 .controlSize(.large)
+                .accessibilityHint("Saves this moment to History.")
 
-                Text("Saving moments to History is coming soon.")
+                Text("Tapping Done saves this moment to your History.")
                     .font(.footnote)
                     .foregroundStyle(Theme.Colors.textSecondary)
                     .frame(maxWidth: .infinity)
@@ -61,6 +64,17 @@ struct MomentDetailView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+    }
+
+    private func saveToHistory() {
+        modelContext.insert(MomentLog(momentID: moment.id))
+        do {
+            // Save right away rather than waiting for autosave, so the entry
+            // survives even if the app is closed immediately afterwards.
+            try modelContext.save()
+        } catch {
+            assertionFailure("Failed to save moment to History: \(error)")
+        }
     }
 }
 
@@ -93,5 +107,6 @@ private struct StepRow: View {
     NavigationStack {
         MomentDetailView(moment: MomentLibrary.takeATurn)
     }
+    .modelContainer(for: MomentLog.self, inMemory: true)
     .tint(Theme.Colors.accent)
 }

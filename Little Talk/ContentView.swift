@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 /// The app's root view: the welcome screen until a baby profile exists,
@@ -36,7 +37,7 @@ private struct MainTabView: View {
     }
 }
 
-#Preview("With profile") {
+#Preview("With profile", traits: .sampleHistory) {
     ContentView()
         .environment(BabyProfileStore(inMemoryProfile: .preview))
 }
@@ -44,4 +45,5 @@ private struct MainTabView: View {
 #Preview("First launch") {
     ContentView()
         .environment(BabyProfileStore(inMemoryProfile: nil))
+        .modelContainer(for: MomentLog.self, inMemory: true)
 }

@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 /// The Today tab: a welcoming header and one featured interaction moment.
@@ -12,10 +13,21 @@ struct TodayView: View {
     @State private var chosenMoment: InteractionMoment?
     @State private var isChoosingMoment = false
 
+    /// All History entries, used to show whether today's moment was tried.
+    /// A few entries a day stays small enough to filter in memory.
+    @Query private var logs: [MomentLog]
+
     @Environment(\.scenePhase) private var scenePhase
 
     private var featuredMoment: InteractionMoment {
         chosenMoment ?? MomentLibrary.featuredMoment(for: profile, on: today)
+    }
+
+    private var wasFeaturedMomentTriedToday: Bool {
+        logs.contains { log in
+            log.momentID == featuredMoment.id
+                && Calendar.current.isDate(log.completedAt, inSameDayAs: today)
+        }
     }
 
     var body: some View {
@@ -23,7 +35,10 @@ struct TodayView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Spacing.extraLarge) {
                     TodayHeaderView(profile: profile, date: today)
-                    FeaturedMomentCard(moment: featuredMoment) {
+                    FeaturedMomentCard(
+                        moment: featuredMoment,
+                        wasTriedToday: wasFeaturedMomentTriedToday
+                    ) {
                         isChoosingMoment = true
                     }
                 }
@@ -66,11 +81,13 @@ struct TodayView: View {
 // Previews apply the app tint themselves; in the app it comes from ContentView.
 #Preview("Light") {
     TodayView(profile: .preview)
+        .modelContainer(for: MomentLog.self, inMemory: true)
         .tint(Theme.Colors.accent)
 }
 
 #Preview("Dark") {
     TodayView(profile: .preview)
+        .modelContainer(for: MomentLog.self, inMemory: true)
         .tint(Theme.Colors.accent)
         .preferredColorScheme(.dark)
 }

@@ -241,4 +241,9 @@ enum MomentLibrary {
         offerAChoice, addOneWord, waitBeforeHelping,
         pretendPlay, nameTheFeeling
     ]
+
+    /// Looks up a moment by its stable identifier, e.g. from a History entry.
+    static func moment(withID id: String) -> InteractionMoment? {
+        all.first { $0.id == id }
+    }
 }
