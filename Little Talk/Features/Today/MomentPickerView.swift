@@ -1,14 +1,16 @@
 import SwiftUI
 
-/// Sheet for picking a different moment from the local library.
+/// Sheet for picking a different moment, from those suited to the baby's age.
 struct MomentPickerView: View {
     @Binding var selection: InteractionMoment
+    /// The moments to offer, already filtered for the baby's age.
+    let moments: [InteractionMoment]
 
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
-            List(MomentLibrary.all) { moment in
+            List(moments) { moment in
                 Button {
                     selection = moment
                     dismiss()
@@ -69,6 +71,9 @@ private struct MomentRow: View {
 }
 
 #Preview {
-    MomentPickerView(selection: .constant(MomentLibrary.takeATurn))
+    MomentPickerView(
+        selection: .constant(MomentLibrary.takeATurn),
+        moments: MomentLibrary.moments(forAgeInMonths: 8)
+    )
         .tint(Theme.Colors.accent)
 }

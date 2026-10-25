@@ -3,6 +3,8 @@ import SwiftUI
 /// App name, greeting, and the baby's age at the top of the Today screen.
 struct TodayHeaderView: View {
     let profile: BabyProfile
+    /// The day to calculate the age for. Today passes its current day.
+    var date: Date = .now
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.small) {
@@ -20,8 +22,8 @@ struct TodayHeaderView: View {
                 .foregroundStyle(Theme.Colors.textSecondary)
 
             BabyAgeBadge(
-                age: profile.age(),
-                adjustedAge: profile.isBornEarly ? profile.developmentalAge() : nil
+                age: profile.age(on: date),
+                adjustedAge: profile.isBornEarly ? profile.developmentalAge(on: date) : nil
             )
             .padding(.top, Theme.Spacing.small)
         }
