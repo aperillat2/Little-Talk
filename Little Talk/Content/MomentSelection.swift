@@ -6,7 +6,9 @@ import Foundation
 /// the featured moment changes daily but stays the same within a day.
 extension MomentLibrary {
     /// The library covers 0 to 24 months; older ages use the 24-month content.
-    static let coveredAgeRange = 0...24
+    /// `nonisolated` because it's a plain constant, readable from any context
+    /// (tests use it as an argument list, which is evaluated off the main actor).
+    nonisolated static let coveredAgeRange = 0...24
 
     /// Moments suited to the given developmental age, in library order.
     static func moments(forAgeInMonths months: Int) -> [InteractionMoment] {

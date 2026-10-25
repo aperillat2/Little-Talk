@@ -6,6 +6,16 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		7007F9A5308D9B8F0091B607 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000100000000;
+			remoteInfo = "Little Talk";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* Little Talk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Little Talk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7007F96C308D96CF0091B607 /* LittleTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LittleTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +97,9 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+				7007F9A6308D9B8F0091B607 /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
 				7007F96D308D96CF0091B607 /* LittleTalkTests */,
 			);
@@ -110,6 +123,7 @@
 					};
 					7007F96B308D96CF0091B607 = {
 						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 000000000000000100000000;
 					};
 				};
 			};
@@ -158,6 +172,14 @@
 			);
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7007F9A6308D9B8F0091B607 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000100000000 /* Little Talk */;
+			targetProxy = 7007F9A5308D9B8F0091B607 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		000000000000000011000000 /* Debug configuration for PBXProject "Little Talk" */ = {
@@ -394,7 +416,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Little Talk.app/Little Talk";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Little Talk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Little Talk";
 				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Debug;
@@ -419,7 +441,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Little Talk.app/Little Talk";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Little Talk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Little Talk";
 				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Release;
