@@ -67,7 +67,7 @@ struct MomentDetailView: View {
 /// One numbered step in a moment's guidance.
 private struct StepRow: View {
     let number: Int
-    let text: String
+    let text: LocalizedStringResource
 
     @ScaledMetric(relativeTo: .subheadline) private var badgeSize: CGFloat = 28
 
@@ -85,7 +85,7 @@ private struct StepRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Step \(number): \(text)"))
+        .accessibilityLabel(Text("Step \(number): \(Text(text))"))
     }
 }
 
@@ -93,4 +93,5 @@ private struct StepRow: View {
     NavigationStack {
         MomentDetailView(moment: MomentLibrary.takeATurn)
     }
+    .tint(Theme.Colors.accent)
 }

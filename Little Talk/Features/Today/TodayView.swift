@@ -31,11 +31,14 @@ struct TodayView: View {
     }
 }
 
+// Previews apply the app tint themselves; in the app it comes from ContentView.
 #Preview("Light") {
     TodayView()
+        .tint(Theme.Colors.accent)
 }
 
 #Preview("Dark") {
     TodayView()
+        .tint(Theme.Colors.accent)
         .preferredColorScheme(.dark)
 }

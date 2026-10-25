@@ -70,4 +70,5 @@ private struct MomentRow: View {
 
 #Preview {
     MomentPickerView(selection: .constant(MomentLibrary.takeATurn))
+        .tint(Theme.Colors.accent)
 }

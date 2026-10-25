@@ -82,4 +82,5 @@ struct FeaturedMomentCard: View {
             .frame(maxHeight: .infinity)
             .background(Theme.Colors.background)
     }
+    .tint(Theme.Colors.accent)
 }
