@@ -2,7 +2,8 @@ import SwiftUI
 
 /// The Today tab: a welcoming header and one featured interaction moment.
 struct TodayView: View {
-    @State private var baby = BabyProfile.placeholder
+    let profile: BabyProfile
+
     @State private var featuredMoment = MomentLibrary.featured
     @State private var isChoosingMoment = false
 
@@ -10,7 +11,7 @@ struct TodayView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Spacing.extraLarge) {
-                    TodayHeaderView(baby: baby)
+                    TodayHeaderView(profile: profile)
                     FeaturedMomentCard(moment: featuredMoment) {
                         isChoosingMoment = true
                     }
@@ -33,12 +34,12 @@ struct TodayView: View {
 
 // Previews apply the app tint themselves; in the app it comes from ContentView.
 #Preview("Light") {
-    TodayView()
+    TodayView(profile: .preview)
         .tint(Theme.Colors.accent)
 }
 
 #Preview("Dark") {
-    TodayView()
+    TodayView(profile: .preview)
         .tint(Theme.Colors.accent)
         .preferredColorScheme(.dark)
 }

@@ -1,22 +1,39 @@
 import SwiftUI
 
-/// Placeholder for the Settings tab. Will hold the baby's profile and preferences.
+/// The Settings tab: edit the baby's details. Changes save immediately.
 struct SettingsView: View {
+    @Environment(BabyProfileStore.self) private var profileStore
+
     var body: some View {
         NavigationStack {
-            ContentUnavailableView(
-                "Settings coming soon",
-                systemImage: "gearshape",
-                description: Text("You'll be able to update your baby's details here.")
-            )
-            .foregroundStyle(Theme.Colors.textSecondary)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            Form {
+                BabyProfileFields(profile: profileBinding)
+
+                Section {
+                } footer: {
+                    Text("Your baby's details are saved only on this device.")
+                }
+            }
+            .scrollContentBackground(.hidden)
             .background(Theme.Colors.background.ignoresSafeArea())
             .navigationTitle("Settings")
+        }
+    }
+
+    /// Reads the stored profile and writes every edit straight back.
+    /// Settings is only reachable once a profile exists, so the fallback
+    /// value is never shown in practice.
+    private var profileBinding: Binding<BabyProfile> {
+        Binding {
+            profileStore.profile ?? BabyProfile(name: "", birthDate: .now)
+        } set: { newValue in
+            profileStore.save(newValue)
         }
     }
 }
 
 #Preview {
     SettingsView()
+        .environment(BabyProfileStore(inMemoryProfile: .preview))
+        .tint(Theme.Colors.accent)
 }
